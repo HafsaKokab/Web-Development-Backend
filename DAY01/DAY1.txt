@@ -1,0 +1,3 @@
+What is Node.js?
+
+Node.js is a JavaScript runtime environment that allows us to run JavaScript outside the browser, especially on the server/backend.

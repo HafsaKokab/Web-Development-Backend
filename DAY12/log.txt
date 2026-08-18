@@ -1,0 +1,17 @@
+REST API = Representational State Transfer Application Programming Interface.
+It allows client and server to communicate over HTTP.
+Data is usually exchanged in JSON format.
+REST uses HTTP methods:
+GET → Read data
+POST → Create data
+PUT/PATCH → Update data
+DELETE → Delete data
+Resource = data/entity accessed through a URL, e.g. /users.
+REST APIs are generally stateless → each request contains the information needed to process it.
+Example: GET /users → returns the list of users.
+================================================
+SSR (Server-Side Rendering): HTML is generated on the server and sent to the browser.
+CSR (Client-Side Rendering): HTML/content is generated in the browser using JavaScript.
+
+SSR → Faster initial load, better SEO
+CSR → Faster interactions after loading, more work on client

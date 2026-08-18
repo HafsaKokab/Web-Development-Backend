@@ -1,0 +1,14 @@
+//version
+Semantic Versioning (SemVer)
+4.18.3 → Version number
+1st part (4) = Major → Major changes / breaking changes
+2nd part (18) = Minor → New features, usually backward compatible
+3rd part (3) = Patch → Minor bug fixes
+
+^ install all recommended and minor fixes Automatically
+~ all you can update minor fixes
+
+
+Q: Why is the latest version not always recommended for projects?
+Latest versions may introduce new bugs, breaking changes, or compatibility issues with your project.
+A stable, tested version is safer and more reliable for production projects.
