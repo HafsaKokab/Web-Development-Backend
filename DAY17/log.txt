@@ -1,0 +1,319 @@
+# URL Shortener Service
+
+A simple and efficient URL Shortener built with **Node.js**, **Express**, and **MongoDB**. This service allows users to convert long URLs into short, shareable links, redirects users to the original URL, and tracks analytics (total clicks and visit history) for every shortened URL.
+
+---
+
+## Features
+
+- Generate short URLs from valid long URLs
+- Redirect short URLs to their original destination
+- Track total clicks/visits per short URL
+- View detailed analytics including visit timestamps
+- Lightweight and fast, powered by Express and MongoDB
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Node.js | Runtime environment |
+| Express.js | Web framework / routing |
+| MongoDB | Database for storing URLs and analytics |
+| Mongoose | MongoDB object modeling (ODM) |
+| shortid | Generating unique short IDs |
+| nodemon | Auto-restarting server during development |
+
+---
+
+## Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+git clone <your-repo-url>
+cd url-shortener
+npm init -y
+npm i express
+npm i mongoose
+npm i shortid
+npm i nodemon
+```
+
+### Run the server
+
+```bash
+nodemon index.js
+```
+
+The server will start on:
+```
+http://localhost:8006
+```
+
+---
+
+## API Routes
+
+### 1. Create Short URL
+
+**Endpoint:** `POST /url`
+
+**Description:** Accepts a valid URL and returns a newly generated short URL.
+
+**Request Body:**
+```json
+{
+  "originalUrl": "https://github.com/HafsaKokab"
+}
+```
+
+**Response:**
+```json
+{
+  "shortUrl": "http://localhost:8006/ErJphdmKP"
+}
+```
+
+---
+
+### 2. Redirect to Original URL
+
+**Endpoint:** `GET /:id`
+
+**Description:** Redirects the user from the short URL to the original (long) URL and logs a new visit for analytics.
+
+**Example:**
+```
+GET http://localhost:8006/ErJphdmKP
+→ Redirects to https://github.com/HafsaKokab
+```
+
+---
+
+### 3. Get URL Analytics
+
+**Endpoint:** `GET /url/analytics/:id`
+
+**Description:** Returns analytics data for a given short URL, including total clicks and a full visit history with timestamps.
+
+**Example Request:**
+```
+GET http://localhost:8006/url/analytics/ErJphdmKP
+```
+
+**Example Response:**
+```json
+{
+  "totalClicks": 5,
+  "analytics": [
+    { "timestamp": "2026-08-18T10:12:45.000Z" },
+    { "timestamp": "2026-08-19T14:03:21.000Z" },
+    { "timestamp": "2026-08-20T09:45:10.000Z" }
+  ]
+}
+```
+
+- **totalClicks** → Total number of times the short URL has been visited
+- **analytics** → An array containing the timestamp of every individual visit
+
+---
+
+## Example Short URLs
+
+| Original URL | Short URL |
+|--------------|-----------|
+| `https://www.google.com` | `http://localhost:8006/fLfoBfeX6` |
+| `https://github.com/HafsaKokab` | `http://localhost:8006/ErJphdmKP` |
+
+---
+
+## Project Structure
+
+```
+url-shortener/
+├── models/
+│   └── url.js
+├── routes/
+│   └── url.js
+├── index.js
+├── package.json
+└── README.md
+```
+
+---
+
+## How It Works
+
+1. A user submits a long/original URL via `POST /url`.
+2. The server generates a unique short ID using `shortid` and saves it to MongoDB along with the original URL.
+3. When a user visits the short URL (`GET /:id`), the server looks up the original URL, logs the visit (timestamp), increments the click count, and redirects the user.
+4. Analytics for any short URL can be retrieved via `GET /url/analytics/:id`, showing total clicks and full visit history.
+
+---
+
+## Future Improvements
+
+- Add custom alias support for short URLs
+- Add URL expiration functionality
+- Add user authentication to manage personal URLs
+- Add a frontend dashboard for analytics visualization
+
+---
+
+## Author
+
+**Hafsa Kokab**
+GitHub: [https://github.com/HafsaKokab](https://github.com/HafsaKokab)
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+=========================================================
+
+
+server side rendering with EJS
+npm i ejs
+============================================
+notes Too 
+# Authentication Patterns
+
+## 1. Stateful Authentication
+
+Stateful authentication means the **server maintains the user's session/state**.
+
+### Flow:
+Login → Server creates Session → Session ID → Cookie → Future Requests
+
+- User sends username and password.
+- Server creates a session.
+- Server sends a Session ID (UID) to the client.
+- Client stores the Session ID, usually in a cookie.
+- The cookie is sent with future requests.
+- Server uses the Session ID to identify the user.
+
+---
+
+## 2. Stateless Authentication
+
+Stateless authentication means the **server does not maintain session state**.
+
+A common example is **JWT (JSON Web Token)**.
+
+### Flow:
+Login → Token Generated → Client Stores Token → Token Sent with Requests
+
+- User logs in.
+- Server generates a token.
+- Client stores the token.
+- Token is sent with every request.
+- Server verifies the token to authenticate the user.
+
+---
+
+## 3. How is UID Transferred?
+
+The Session UID can be transferred between the client and server using:
+
+- Cookies
+- Headers
+- Response
+
+Cookies are commonly used in session-based authentication.
+
+---
+
+## 4. Express Authentication Flow
+
+In Express.js, authentication is commonly handled using **middleware**.
+
+```text
+Client
+   ↓
+Auth Middleware
+   ↓
+Check Cookie / UID / Token
+   ↓
+Valid?
+  ├── Yes → next() → Endpoint Route
+  └── No  → Reject Request
+
+  npm i uuid
+
+  npm i cookie-parser
+
+
+  ===================
+  # JWT Authentication — Short Notes
+
+### 1. JWT
+
+**JWT (JSON Web Token)** is used for authentication. It allows the server to identify a logged-in user without storing a session on the server.
+
+### 2. Secret Key 🔑
+
+The **secret key** is a private key kept on the server. It is used to **sign** and **verify** JWT tokens.
+
+```js
+const secret = "Piyush$123@$";
+```
+
+**Secret Key = Server's private key**
+
+### 3. Token 🎟️
+
+After successful login, the server creates a JWT token:
+
+```js
+const token = setUser(user);
+```
+
+The token is usually stored in a **cookie** and sent with future requests.
+
+**Token = Proof that the user is authenticated**
+
+### 4. Sign
+
+```js
+jwt.sign(user, secret);
+```
+
+The server uses the **secret key** to create/sign the JWT token.
+
+### 5. Verify
+
+```js
+jwt.verify(token, secret);
+```
+
+The server checks whether the token is valid using the same secret key.
+
+###
+
+### 7. Stateful vs Stateless
+
+**Stateful → Session**
+
+* Server stores the user's session information.
+* Server remembers the user.
+* Usually uses a **Session ID**.
+
+**Stateless → JWT**
+
+* Server does not store a login session.
+* The client sends the JWT with requests.
+* Server verifies the token using the secret key.
+
+### Easy Memory Trick
+
+**🔵 JWT → Stateless**
+**🟢 Session → Stateful**
+
+**Secret Key 🔑 → creates & verifies Token 🎟️ → Token proves authentication.**
+
+
+Authentication: Verifies who the user is (e.g., login with email and password).
+Authorization: Determines what the authenticated user is allowed to access or do.
