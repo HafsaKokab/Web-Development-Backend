@@ -24,7 +24,7 @@ A simple and professional Discord bot built with **Node.js** and **discord.js**.
 ## 📁 Project Structure
 
 ```text
-discord_bot/
+NodeJS-Discord-Bot/
 │
 ├── index.js          # Main bot file
 ├── command.js        # Registers slash commands
@@ -39,7 +39,7 @@ discord_bot/
 
 ```bash
 git clone <your-repository-url>
-cd discord_bot
+cd NodeJS-Discord-Bot
 ```
 
 ### 2. Install Dependencies
@@ -213,9 +213,5 @@ Possible future features include:
 This project is created for **learning and educational purposes**.
 
 ---
-
-### 👩‍💻 Author
-
-**Hafsa Kokab**
 
 Built with ❤️ using **Node.js + discord.js**
