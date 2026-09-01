@@ -23,7 +23,7 @@ A simple and professional **File Upload System** built with **Node.js, Express.j
 ## 📂 Project Structure
 
 ```text
-DAY20/
+NodeJS-File-Upload-System/
 │
 ├── node_modules/
 ├── uploads/
@@ -48,7 +48,7 @@ git clone <your-repository-url>
 ### 2. Navigate to the project
 
 ```bash
-cd DAY20
+cd NodeJS-File-Upload-System
 ```
 
 ### 3. Install dependencies
